@@ -3,30 +3,10 @@ const startMenu = document.getElementById('start-menu');
 const taskItemsContainer = document.querySelector('.task-items');
 const desktop = document.querySelector('.desktop');
 
-// Scale Logic
+// Responsive desktop: fills the iframe at any size, no scaling.
 let scaleFactor = 1;
-const baseSize = 250;
 
-function resizeApp() {
-    const width = window.innerWidth;
-    // Calculate scale to fit width
-    scaleFactor = width / baseSize;
-    
-    if (desktop) {
-        desktop.style.transformOrigin = 'top left';
-        desktop.style.transform = `scale(${scaleFactor})`;
-        
-        // Adjust body height to match scaled content
-        // This ensures the iframe fits the content vertically
-        document.body.style.height = (baseSize * scaleFactor) + 'px';
-        document.body.style.width = '100%';
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-window.addEventListener('resize', resizeApp);
-// Run initially
-resizeApp();
+window.addEventListener('resize', () => {});
 
 // Helper for touch/mouse coordinates
 const getClientPos = (e) => {
