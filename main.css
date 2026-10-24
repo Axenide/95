@@ -430,6 +430,7 @@ button {
   background-color: var(--color-white);
   background-image: var(--checker);
   background-size: 2px 2px;
+  font-weight: bold;
 }
 
 .start-icon {
@@ -448,7 +449,7 @@ button {
 
 .task-item {
   height: 22px;
-  font-size: 11px;
+  font-size: 12.5px;
   line-height: 13px;
   background: var(--color-gray-200);
   box-shadow: var(--shadow-outer-4);
