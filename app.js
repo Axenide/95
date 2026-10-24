@@ -164,7 +164,7 @@ function toggleMaximize(win) {
         win.style.top = '0';
         win.style.left = '0';
         win.style.width = '100%';
-        win.style.height = 'calc(100% - 22px)'; // Minus taskbar
+        win.style.height = 'calc(100% - 28px)'; // Minus taskbar
         win.setAttribute('data-maximized', 'true');
     }
 }
@@ -368,5 +368,14 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 updateClock();
+
+// Pixel-snap centered labels: centering can land on half-pixels (odd text
+// widths), which antialiases the bitmap font; nudge 1px onto the grid.
+const snapLabels = () => document.querySelectorAll('.desktop-icon > span, .taskbar-clock > span').forEach(span => {
+  span.style.marginLeft = '';
+  if (span.getBoundingClientRect().left % 1 !== 0) span.style.marginLeft = '1px';
+});
+snapLabels();
+if (document.fonts) document.fonts.ready.then(snapLabels);
 
 init();

@@ -1,59 +1,111 @@
-@font-face {
-  font-family: "w95font";
-  src:
-    url("./assets/w95font.woff2") format("woff2"),
-    url("./assets/w95font.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
+/*
+ * Visual language ported from 95CSS (https://github.com/YoshiMannaert/95CSS, MIT).
+ * Tokens, layered box-shadow bevels and the checker pattern are theirs,
+ * re-scaled to the 1px pixel grid of the tile embed (~410x270).
+ */
+
+/* == 95CSS tokens (pixel-grid halves) ===================================== */
+
+:root {
+  /* Spacing */
+  --spacing-base: 2px;
+  --spacing-1: 1px;
+  --spacing-2: 2px;
+  --spacing-3: 4px;
+  --spacing-4: 6px;
+  --spacing-5: 8px;
+  --spacing-6: 16px;
+
+  /* Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-100: #dedede;
+  --color-gray-200: #c3c3c3;
+  --color-gray-300: #808080;
+  --color-blue: #0f0086;
+  --color-teal: #008080;
+
+  /* Box shadows - Inner */
+  --shadow-inner-1: inset -1px -1px 0 var(--color-white),
+    inset 1px 1px 0 var(--color-gray-300);
+  --shadow-inner-3: inset -1px -1px 0 var(--color-white),
+    inset 1px 1px 0 var(--color-black),
+    inset -2px -2px 0 var(--color-gray-100),
+    inset 2px 2px 0 var(--color-gray-300);
+
+  /* Box shadows - Outer */
+  --shadow-outer-3: inset -1px -1px 0 var(--color-black),
+    inset 1px 1px 0 var(--color-gray-100),
+    inset -2px -2px 0 var(--color-gray-300),
+    inset 2px 2px 0 var(--color-white);
+  --shadow-outer-4: inset -1px -1px 0 var(--color-black),
+    inset 1px 1px 0 var(--color-white),
+    inset -2px -2px 0 var(--color-gray-300);
+
+  /* Checker pattern (pressed/selected states), 1px checks */
+  --checker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='2' height='2' fill='white'/%3E%3Crect width='1' height='1' fill='%23DEDEDE'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%23DEDEDE'/%3E%3C/svg%3E");
 }
 
-@font-face {
-  font-family: "w95font";
-  src:
-    url("./assets/w95font-bold.woff2") format("woff2"),
-    url("./assets/w95font-bold.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
+/* == Base ================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   background: #1b1d1d;
   overflow: hidden;
-  font-family: "w95font", sans-serif;
-  font-size: 10px;
+  font-family: "w95px", "w95font", sans-serif;
+  font-size: 12.5px;
+  line-height: 12px;
+  color: var(--color-black);
   user-select: none;
+}
+
+button {
+  border: none;
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  color: var(--color-white);
+  background: var(--color-blue);
 }
 
 .desktop {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  background-color: #008080;
+  background-color: var(--color-teal);
   position: relative;
   overflow: hidden;
-  border: 1px solid #000;
-  touch-action: none; /* Prevent browser scrolling on desktop */
+  touch-action: none;
 }
 
-/* Estilo Windows 95 (Chicago) */
+/* == Windows (95CSS dialog language: layered shadow bevel, no borders) ===== */
+
 .window {
   position: absolute;
-  background: #c0c0c0;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  padding: 2px;
-  box-shadow: 1px 1px 0 #000;
+  background: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-3);
+  /* 1px bevel bands sit inside these 4px: visible face framing around the
+     title bar and body = 2px, per the Win95 window frame */
+  padding: 4px;
+  gap: 2px;
   display: flex;
   flex-direction: column;
   z-index: 10;
-  box-sizing: border-box;
 }
 
 .title-bar {
-  background: #808080; /* Inactive Grey */
-  color: #c0c0c0;
-  padding: 2px 3px;
+  background: var(--color-gray-300); /* Inactive */
+  color: var(--color-white);
+  padding: 1px 2px 1px 3px;
+  height: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,21 +117,22 @@ body {
 }
 
 .window.active .title-bar {
-  background: #000080; /* Active Blue */
-  color: white;
+  background: var(--color-blue); /* Active */
 }
 
 .title {
   font-weight: bold;
   white-space: nowrap;
-  font-size: 9px;
+  font-size: 12.5px;
+  line-height: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
   min-width: 0;
-  margin-right: 4px;
+  margin-right: var(--spacing-2);
 }
 
+/* Window buttons: 16x14 glyphs, min+max flush, 2px gap to close */
 .controls {
   display: flex;
   gap: 0;
@@ -87,60 +140,40 @@ body {
 }
 
 .controls button {
-  width: 12px;
-  height: 12px;
-  font-size: 8px;
-  background: #c0c0c0;
-  border: 1px solid;
-  border-color: #fff #808080 #808080 #fff;
-  box-shadow: 1px 1px 0 #000;
+  width: 16px;
+  height: 14px;
+  background-color: var(--color-gray-200);
+  background-origin: border-box;
+  box-shadow: var(--shadow-outer-4);
   cursor: pointer;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   padding: 0;
-  font-family: "w95font", sans-serif;
-  font-weight: bold;
+  image-rendering: pixelated;
   position: relative;
   z-index: 200; /* Ensure buttons are clickable over resizers */
   touch-action: none;
 }
 
 .controls button.min-btn {
-  align-items: flex-end;
-  padding-bottom: 3px;
-  margin-right: 1px;
-  font-size: 12px;
-  line-height: 0.6;
+  background-image: url("./assets/minimize95.webp");
 }
 
 .controls button.max-btn {
-  padding: 0;
-}
-
-.max-icon {
-  width: 8px;
-  height: 8px;
-  border: 1px solid black;
-  border-top-width: 2px;
-  box-sizing: border-box;
+  background-image: url("./assets/maximize95.webp");
 }
 
 .controls button.close-btn {
-  font-size: 10px;
+  background-image: url("./assets/close95.webp");
   margin-left: 2px;
 }
 
 .controls button:active {
-  border-color: #808080 #fff #fff #808080;
-  padding-top: 1px;
-  padding-left: 1px;
-  box-shadow: none;
+  box-shadow: var(--shadow-inner-3);
+  background-position: 1px 1px;
 }
 
 .window-body {
-  padding: 2px;
+  padding: var(--spacing-3);
   flex-grow: 1;
   overflow: hidden;
   display: flex;
@@ -150,6 +183,11 @@ body {
   touch-action: pan-y; /* Allow vertical scrolling inside windows */
 }
 
+.window-body:has(> .content-img),
+.window-body:has(> .content-gif) {
+  padding: 0;
+}
+
 .window-body a {
   display: block;
   width: 100%;
@@ -157,22 +195,10 @@ body {
 
 .content-img {
   width: 100%;
-  height: auto;
-  display: block;
-  image-rendering: pixelated;
-}
-.content-gif {
-  width: 100%;
-  height: auto;
-  display: block;
-  image-rendering: pixelated;
-}
-
-.content-img {
-  width: 100%;
   height: 100%;
   object-fit: contain;
   image-rendering: pixelated;
+  display: block;
 }
 
 .content-gif {
@@ -247,14 +273,15 @@ body {
   cursor: sw-resize;
 }
 
-/* Desktop Icons */
+/* == Desktop Icons ========================================================= */
+
 .desktop-icon {
   position: absolute;
   width: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
+  color: var(--color-white);
   text-align: center;
   cursor: pointer;
   z-index: 1;
@@ -264,43 +291,47 @@ body {
 .desktop-icon img {
   width: 32px;
   height: 32px;
-  margin-bottom: 2px;
+  image-rendering: pixelated;
+  margin-bottom: var(--spacing-1);
 }
 
 .desktop-icon span {
-  font-size: 9px;
-  text-shadow: 1px 1px 1px black;
-  padding: 1px 2px;
+  font-size: 12.5px;
+  line-height: 12px;
+  text-shadow: 1px 1px 0 var(--color-black);
+  padding: 0 2px;
 }
 
 .desktop-icon:active span,
 .desktop-icon.selected span {
-  background: #000080;
-  border: 1px dotted white;
+  background: var(--color-blue);
+  border: 1px dotted var(--color-white);
+  padding: 0 1px;
 }
 
-/* Start Menu */
+/* == Start Menu ============================================================ */
+
 .start-menu {
   position: absolute;
-  bottom: 22px;
-  left: 0;
-  width: 120px;
-  background: #c0c0c0;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
+  bottom: 28px;
+  left: var(--spacing-1);
+  width: 150px;
+  background: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-3);
+  padding: 4px;
   display: flex;
   z-index: 1000; /* Increased z-index */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .menu-sidebar {
-  background: linear-gradient(to top, #000080, #1084d0);
+  background: linear-gradient(to top, var(--color-blue), #1084d0);
   width: 18px;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  color: #fff;
-  padding: 5px 2px;
-  font-size: 11px;
+  color: var(--color-white);
+  padding: var(--spacing-3) 3px;
+  font-size: 12.5px;
+  line-height: 12px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -311,17 +342,19 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: #c0c0c0;
+  padding: var(--spacing-1) 0;
 }
 
 .menu-item {
-  padding: 3px 6px;
+  padding: var(--spacing-1) var(--spacing-3);
   text-decoration: none;
-  color: #000;
+  color: var(--color-black);
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 9px;
+  gap: var(--spacing-2);
+  font-size: 12.5px;
+  line-height: 12px;
+  cursor: pointer;
 }
 
 .menu-item img {
@@ -329,52 +362,63 @@ body {
   height: 14px;
   image-rendering: pixelated;
 }
+
 .menu-item:hover {
-  background: #000080;
-  color: #fff;
+  background: var(--color-blue);
+  color: var(--color-white);
 }
 
-/* Taskbar */
+/* == Taskbar (95CSS header: layered bevel, checkered pressed states) ======= */
+
 .taskbar {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 22px;
-  background: #c0c0c0;
-  border-top: 2px solid #fff;
+  height: 28px;
+  background-color: var(--color-gray-200);
+  /* Double top edge: 1px taskbar gray + 1px white, painted over the first
+     2px of the top padding (border-substitute on the pixel grid). */
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-gray-200) 0 1px,
+    var(--color-white) 1px 2px,
+    transparent 2px
+  );
   display: flex;
-  align-items: center;
-  padding: 2px;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  /* top: 2px double border + 2px face; sides/bottom: 2px face */
+  padding: 4px 2px 2px;
   box-sizing: border-box;
   z-index: 900;
   justify-content: space-between;
 }
 
 .taskbar-clock {
-  margin-left: 4px;
-  border: 1px solid;
-  border-color: #808080 #fff #fff #808080;
-  background: #c0c0c0;
-  padding: 0 4px;
-  height: 16px;
+  margin-left: var(--spacing-1);
+  box-shadow: var(--shadow-inner-1);
+  background: var(--color-gray-200);
+  padding: 0 var(--spacing-3);
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  min-width: 40px;
+  font-size: 12.5px;
+  line-height: 12px;
+  min-width: 64px;
 }
 
 .start-btn {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: var(--spacing-2);
   font-weight: bold;
-  height: 16px;
-  padding: 0 4px;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  background: #c0c0c0;
-  font-size: 10px;
+  height: 22px;
+  padding: 0 var(--spacing-3) 0 var(--spacing-2);
+  background: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-4);
+  font-size: 12.5px;
+  line-height: 12px;
   font-family: inherit;
   cursor: pointer;
   touch-action: none;
@@ -382,8 +426,12 @@ body {
 
 .start-btn:active,
 .start-btn.active {
-  border-color: #808080 #fff #fff #808080;
+  box-shadow: var(--shadow-inner-3);
+  background-color: var(--color-white);
+  background-image: var(--checker);
+  background-size: 2px 2px;
 }
+
 .start-icon {
   width: 12px;
   height: 12px;
@@ -392,35 +440,75 @@ body {
 
 .task-items {
   display: flex;
-  gap: 2px;
-  margin-left: 4px;
+  gap: 3px;
+  margin-left: 2px;
   flex-grow: 1;
   overflow: hidden;
 }
 
 .task-item {
-  height: 16px;
-  font-size: 9px;
-  background: #c0c0c0;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  padding: 0 4px;
+  height: 22px;
+  font-size: 12.5px;
+  line-height: 12px;
+  background: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-4);
+  padding: 0 var(--spacing-3);
   width: auto;
-  flex: 0 1 100px;
+  flex: 1 1 100px;
+  max-width: 160px;
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   font-family: inherit;
+  font-weight: normal;
   text-align: left;
   text-overflow: ellipsis;
   touch-action: none;
 }
 
 .task-item.active {
-  background: #e0e0e0;
-  border-color: #808080 #fff #fff #808080;
+  box-shadow: var(--shadow-inner-3);
+  background-color: var(--color-white);
+  background-image: var(--checker);
+  background-size: 2px 2px;
+}
+
+/* == Fonts (local assets, unchanged) ======================================= */
+
+/* Grid-fitted pixel fonts: outlines snapped to the font's native design
+   grid (80 units = 1px at 12.5ppem). Render binary-crisp when used at
+   exactly 12.5px; any other size defeats the purpose. */
+@font-face {
+  font-family: "w95px";
+  src: url("./assets/w95px-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "w95px";
+  src: url("./assets/w95px-bold.woff2") format("woff2");
   font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "w95font";
+  src:
+    url("./assets/w95font.woff2") format("woff2"),
+    url("./assets/w95font.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "w95font";
+  src:
+    url("./assets/w95font-bold.woff2") format("woff2"),
+    url("./assets/w95font-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
 }
 
 @font-face {
@@ -443,8 +531,8 @@ body {
 .blink-cursor {
   display: inline-block;
   width: 6px;
-  height: 10px;
-  background: white;
+  height: 12px;
+  background: var(--color-white);
   vertical-align: text-bottom;
   animation: blink 1s step-end infinite;
 }
@@ -457,4 +545,49 @@ body {
 #win-fetch .window-body {
   user-select: text;
   cursor: text;
+}
+
+/* == Scrollbars (95CSS pattern, pixel scale: 13px) ========================= */
+
+::-webkit-scrollbar {
+  width: 13px;
+  min-height: 13px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-white);
+  background-image: var(--checker);
+  background-size: 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-4);
+}
+
+::-webkit-scrollbar-button {
+  height: 13px;
+  background-color: var(--color-gray-200);
+  box-shadow: var(--shadow-outer-4);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px;
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+  display: block;
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M0%209.42999L12%209.42999V7.71571L0%207.71571V9.42999ZM1.71429%207.71569L10.2857%207.71569V6.0014H8.57143V4.28712L6.85714%204.28712V2.57283H5.14286V4.28712H3.42857V6.0014L1.71429%206.0014V7.71569Z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:start:increment {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical:end:decrement {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  display: block;
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M12%202.57001H0V4.28429H12V2.57001ZM10.2857%204.28431H1.71429V5.9986H3.42857V7.71288H5.14286V9.42717H6.85714V7.71288H8.57143V5.9986H10.2857V4.28431Z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E");
 }
