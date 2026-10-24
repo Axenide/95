@@ -323,8 +323,10 @@ button {
 
 .start-menu {
   position: absolute;
-  bottom: 28px;
-  left: var(--spacing-1);
+  /* Anchored to the Start button's top-left corner: taskbar left padding
+     (2px) horizontally; taskbar top padding (4px) above the taskbar edge. */
+  bottom: 24px;
+  left: 2px;
   width: 150px;
   background: var(--color-gray-200);
   box-shadow: var(--shadow-outer-3);
@@ -334,18 +336,32 @@ button {
 }
 
 .menu-sidebar {
-  background: linear-gradient(to top, var(--color-blue), #1084d0);
-  width: 19px;
+  background: #808080;
+  width: 21px;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   color: var(--color-white);
   padding: var(--spacing-3) 3px;
   font-size: 11px;
-  line-height: 13px;
-  font-weight: bold;
+  line-height: 14px;
   display: flex;
   align-items: center;
   text-align: center;
+}
+
+.menu-sidebar span {
+  font-weight: normal;
+}
+
+.menu-sidebar .side-name {
+  font-family: "Bytesized", monospace;
+  font-size: 20px;
+  color: #c0c0c0;
+}
+
+.menu-sidebar .side-ver {
+  font-family: "Cozette", monospace;
+  font-size: 20px;
 }
 
 .menu-items {
@@ -517,6 +533,20 @@ button {
     url("./assets/w95font-bold.woff2") format("woff2"),
     url("./assets/w95font-bold.woff") format("woff");
   font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bytesized";
+  src: url("./assets/bytesized.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cozette";
+  src: url("./assets/cozette.woff2") format("woff2");
+  font-weight: normal;
   font-style: normal;
 }
 
