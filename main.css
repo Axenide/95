@@ -148,6 +148,15 @@ button {
   flex-shrink: 0;
 }
 
+/* 16px title icons sit 1px into the padding on each side for a 1px/1px fit */
+.title-icon {
+  width: 16px;
+  height: 16px;
+  margin: -1px 4px -1px 0;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+
 .controls button {
   width: 16px;
   height: 14px;
