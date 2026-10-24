@@ -88,6 +88,16 @@ function setActiveTaskbarItem(winId) {
     });
 }
 
+// Taskbar item icon per window id (16x16 assets, drawn at native size)
+const TASKBAR_ICONS = {
+    'win-recycle': 'recycle95',
+    'win-smoking': 'file95',
+    'win-gif': 'file95',
+    'win-tux': 'recycle95',
+    'win-note': 'text95',
+    'win-fetch': 'exe95',
+};
+
 // Función para agregar item al taskbar
 function addTaskbarItem(winId, title) {
     if (document.querySelector(`.task-item[data-win="${winId}"]`)) return;
@@ -95,7 +105,16 @@ function addTaskbarItem(winId, title) {
     const btn = document.createElement('button');
     btn.className = 'task-item';
     btn.setAttribute('data-win', winId);
-    btn.textContent = title;
+
+    const icon = document.createElement('img');
+    icon.src = `assets/icons/${TASKBAR_ICONS[winId] || 'file95'}.webp`;
+    icon.alt = '';
+    icon.draggable = false;
+    btn.appendChild(icon);
+
+    const label = document.createElement('span');
+    label.textContent = title;
+    btn.appendChild(label);
     
     btn.onclick = (e) => {
         e.stopPropagation();
