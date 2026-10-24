@@ -326,7 +326,7 @@ button {
 .desktop-icon span {
   font-size: 12.5px;
   line-height: 13px;
-  text-shadow: 1px 1px 0 var(--color-black);
+  background: var(--color-teal);
   padding: 0 2px;
 }
 
