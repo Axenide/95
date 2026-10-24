@@ -122,6 +122,13 @@ button {
   background: var(--color-blue); /* Active */
 }
 
+/* Maximized: flat 1px face line between title bar and body; +1px height
+   keeps the 14px button row intact under border-box */
+.window[data-maximized] .title-bar {
+  height: 19px;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
 .title {
   font-weight: bold;
   white-space: nowrap;
