@@ -59,8 +59,8 @@ body {
   background: #1b1d1d;
   overflow: hidden;
   font-family: "w95px", "w95font", sans-serif;
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   color: var(--color-black);
   user-select: none;
 }
@@ -132,8 +132,8 @@ button {
 .title {
   font-weight: bold;
   white-space: nowrap;
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
@@ -324,8 +324,8 @@ button {
 }
 
 .desktop-icon span {
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 16px;
   background: var(--color-teal);
   padding: 0 2px;
 }
@@ -360,7 +360,7 @@ button {
   transform: rotate(180deg);
   color: var(--color-white);
   padding: var(--spacing-3) 3px;
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 14px;
   display: flex;
   align-items: center;
@@ -396,8 +396,8 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   cursor: pointer;
 }
 
@@ -453,8 +453,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   min-width: 56px;
 }
 
@@ -467,8 +467,8 @@ button {
   padding: 1px var(--spacing-3) 2px var(--spacing-2);
   background: var(--color-gray-200);
   box-shadow: var(--shadow-outer-4);
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   font-family: inherit;
   cursor: pointer;
   touch-action: none;
@@ -497,8 +497,8 @@ button {
 
 .task-item {
   height: 22px;
-  font-size: 12.5px;
-  line-height: 13px;
+  font-size: 12px;
+  line-height: 12px;
   background: var(--color-gray-200);
   box-shadow: var(--shadow-outer-4);
   display: flex;
