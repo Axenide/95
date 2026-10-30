@@ -479,6 +479,10 @@ button {
   box-shadow: var(--shadow-inner-3);
   padding: 2px calc(var(--spacing-3) - 1px) 1px calc(var(--spacing-2) + 1px);
   font-weight: bold;
+  /* The pressed default-button ring: 1px black dotted, 5px in from the
+     face (same recipe as the site theme's Join button). */
+  outline: 1px dotted #000;
+  outline-offset: -5px;
 }
 
 .start-icon {
