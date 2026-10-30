@@ -464,7 +464,7 @@ button {
   gap: 3px;
   font-weight: bold;
   height: 22px;
-  padding: 1px var(--spacing-3) 2px var(--spacing-2);
+  padding: 1px calc(var(--spacing-3) + 2px) 2px calc(var(--spacing-2) + 2px);
   background: var(--color-gray-200);
   box-shadow: var(--shadow-outer-4);
   font-size: 12px;
@@ -477,7 +477,7 @@ button {
 .start-btn:active,
 .start-btn.active {
   box-shadow: var(--shadow-inner-3);
-  padding: 2px calc(var(--spacing-3) - 1px) 1px calc(var(--spacing-2) + 1px);
+  padding: 2px calc(var(--spacing-3) + 1px) 1px calc(var(--spacing-2) + 3px);
   font-weight: bold;
   /* The pressed default-button ring: 1px black dotted, 4px in from the
      face (same recipe as the site theme's Join button). */
